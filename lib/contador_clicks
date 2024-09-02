@@ -1,0 +1,74 @@
+/*import 'package:flutter/cupertino.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const CupertinoApp(
+      title: 'Cupertino App',
+      home: CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text('Cupertino App Bar'),
+        ),
+        child: Center(
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+  }
+}
+*/
+
+import 'package:flutter/material.dart';
+
+void main() => runApp( MyApp()); //el MyApp es un objeto de la clase MyApp
+
+class MyApp extends StatefulWidget {
+  //stateless no muestra cambios en la pantalla durante la ejecuacion
+   MyApp({super.key}); 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+ //super.key es un parametro nombrado
+    int contador = 0;
+
+  @override //metodo sobrecargado
+  Widget build(BuildContext context) {
+ 
+
+    //el metodo build se ejcuta oara mostrar la aplicacion
+    return MaterialApp(
+      //MaterialApp es el widget base de la aplicacion
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Mi primera App",
+            style: TextStyle(color: const Color.fromARGB(255, 57, 0, 156)),
+          ),
+          backgroundColor: const Color.fromARGB(255, 58, 212, 255),
+        ),
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          color: Colors.grey,
+          child: Center(
+              child: Text(
+            'Contador de clicks: $contador',
+            textAlign: TextAlign.center,
+          )),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.ads_click_sharp),
+          onPressed: (){
+          contador++;
+          setState(() {});
+          print(contador);
+        }),
+      ),
+    );
+  }
+}
