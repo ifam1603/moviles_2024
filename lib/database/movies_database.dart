@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:moviles_2024/models/moviesDAO.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -31,11 +33,11 @@ class MoviesDatabase {
 
           CREATE TABLE tblmovies(
             idmovie INTEGER PRIMARY KEY ,
-            nameMovie varchar(100),
+            namemovie varchar(100),
             overview text(),
-            idGenero char(1),
-            imgMovie VARCGAR(150),
-            releaseDate CHAR(10), 
+            idgenero char(1),
+            imgmovie VARCGAR(150),
+            releasedate CHAR(10), 
             constraint fk_genre foreign key(idGenero) references tblgenre(idGenre);
         );''';
         db.execute(query);
@@ -47,13 +49,23 @@ class MoviesDatabase {
 //estos seran metodos que se ejecuten en ssegundo plano 
   Future<int> INSERT(String table,Map<String,dynamic> row) async { //dynamic utiliza para regresar cualquier tipo de dato
     var con = await database;
-    return con.insert(table, row);
+    return await con.insert(table, row);
   }
 
-  Future<int> UPDATE() async {}
+  Future<int> UPDATE(String table, Map<String,dynamic> row) async {
+    var con = await database;
+    return await con.update(table, row, where: 'idmovie = ?',whereArgs: [row['idmovie']]);
+  }
 
-  Future<int> DELETE() async {}
+  Future<int> DELETE(String table, int idmovie ) async {
+    var con = await database;
+    return await con.delete(table,where: 'idmovie =?',whereArgs: [idmovie]);
+  }
 
-  Future<List<MoviesDAO>> SELECT() async {}
+  Future<List<MoviesDAO>> SELECT() async {
+    var con = await database;
+    var result = await con.query('tblmovies');
+    return result.map((movie) => MoviesDAO.fromMap(movie)).toList();
+  }
 
 }
