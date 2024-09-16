@@ -1,6 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:moviles_2024/screens/movies_screen.dart';
 import 'package:moviles_2024/screens/profile_screen.dart';
 import 'package:moviles_2024/settings/color_settings.dart';
 import 'package:moviles_2024/settings/global_values.dart';
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           case 1:
             return ProfileScreen();
           default:
-            return ProfileScreen();
+            return MoviesScreen();
         }
       }),
       //endDrawer: Drawer(),
