@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }),
       //endDrawer: Drawer(),
-      drawer: Drawer(),
+      drawer: myDrawer(),
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icons.home, title: 'Home'),
@@ -74,4 +74,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
     );
   }
+
+  Widget myDrawer(){
+      return Drawer(
+        child: ListView(
+          children: [
+            const UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzoEHXyPFTvvqwFKKMX9XqrHlbPu4m1PG3KQ&s'),
+              ),
+              accountName: Text('Antoine Griezzman'), 
+              accountEmail: Text('antuan@hotmail.com')
+              ),
+              ListTile(
+                onTap: () => Navigator.pushNamed(context,'/db'),
+                title: const Text('Movies List'),
+                subtitle: const Text('Database of movies'),
+                leading: Icon(Icons.movie),//lado izquierdo,
+                trailing: Icon(Icons.chevron_right), //lado derecho
+              )
+          ],
+        ),
+      );
+    }
 }
