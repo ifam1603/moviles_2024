@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:moviles_2024/database/movies_database.dart';
 import 'package:moviles_2024/models/moviesDAO.dart';
+import 'package:moviles_2024/settings/global_values.dart';
+import 'package:moviles_2024/views/movie_view.dart';
+import 'package:moviles_2024/views/movie_view_item.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class MoviesScreen extends StatefulWidget {
   const MoviesScreen({super.key});
@@ -12,11 +16,10 @@ class MoviesScreen extends StatefulWidget {
 
 class _MoviesScreenState extends State<MoviesScreen> {
 
-  //mandamos a llamra 
-  late MoviesDatabase moviesDB =  MoviesDatabase();
-  
+  late MoviesDatabase moviesDB;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     moviesDB = MoviesDatabase();
   }
@@ -24,29 +27,52 @@ class _MoviesScreenState extends State<MoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Movies list'),),
-      body:  FutureBuilder(
-        future: moviesDB.SELECT(),//aqui el future builder va a ejecutar en segundo plano
-        builder: (context,AsyncSnapshot<List<MoviesDAO>> snapshot) {
-          if(snapshot.hasData){
-            return ListView.builder(//el listview solo se usa cuand sabemos cuantos elemntos son, si no sabemos usamos el builder
-              itemBuilder: (context, index) { 
-                return movieViewItem();         
-              },
-          );
-          }else{
-            if(snapshot.hasError){
-              return Center(child: Text('something was wrong '),);
-            }else{
-              return Center(child:CircularProgressIndicator(),);
+      appBar: AppBar(
+        title: const Text('Movies List'),
+        actions: [
+          IconButton(
+            onPressed: (){
+
+              WoltModalSheet.show(
+                context: context, 
+                pageListBuilder: (context) => [
+                  WoltModalSheetPage(
+                    child: MovieView()
+                  )
+                ]
+              );
+
+            }, 
+            icon: const Icon(Icons.add) 
+          )
+        ],
+      ),
+      body: ValueListenableBuilder(
+        valueListenable: GlobalValues.bandUpdListMovies,
+        builder: (context, value, widget) {
+          return FutureBuilder(
+            future: moviesDB.SELECT(),
+            builder: (context, AsyncSnapshot<List<MoviesDAO>?> snapshot) {
+              if(snapshot.hasData){
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return MovieViewItem(
+                      moviesDAO: snapshot.data![index],
+                    );
+                  },
+                );
+              }else{
+                if(snapshot.hasError){
+                  return Center(child: Text(snapshot.error.toString()),);
+                }else{
+                  return Center(child: CircularProgressIndicator(),);
+                }
+              }
             }
-          }
+          );
         }
       ),
     );
-  }
-
-  Widget movieViewItem(){
-    return Text('');
-  }
+  }  
 }

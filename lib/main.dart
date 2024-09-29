@@ -12,20 +12,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: GlobalValues.banthemeDark,
-      builder: (context, value ,Widget) {
-        return MaterialApp(
-          title: 'Material App',
-          debugShowCheckedModeBanner: false,
-          home: const LoginScreen(),
-          theme: GlobalValues.banthemeDark.value ? ThemeData.dark() : ThemeData.light(),
-          routes: {
-            "/home": (context) => HomeScreen(),
-            "/db":(context)=> MoviesScreen()
-          },
-        );
-      }
-    );
+        valueListenable: GlobalValues.banthemeDark,
+        builder: (context, value, Widget) {
+          return MaterialApp(
+            title: 'Material App',
+            debugShowCheckedModeBanner: false,
+            home: HomeScreen(),
+            theme: GlobalValues.banthemeDark.value
+                ? ThemeData.dark()
+                : ThemeData.light(),
+            routes: {
+              "/home": (context) => HomeScreen(),
+              "/db": (context) => MoviesScreen()
+            },
+          );
+        });
   }
 }
 

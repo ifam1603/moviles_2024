@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           case 1:
             return ProfileScreen();
           default:
-            return MoviesScreen();
+            return ProfileScreen();
         }
       }),
       //endDrawer: Drawer(),
@@ -59,12 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
         key: _key,
         children: [
           FloatingActionButton.small(
+             heroTag: "btn1",
             onPressed: (){
               GlobalValues.banthemeDark.value = false;
             },
             child:const Icon(Icons.light_mode)
             ),
           FloatingActionButton.small(
+            heroTag: "btn2",
             onPressed: (){
               GlobalValues.banthemeDark.value = true;
             },
@@ -88,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ListTile(
                 onTap: () => Navigator.pushNamed(context,'/db'),
-                title: const Text('Movies List'),
-                subtitle: const Text('Database of movies'),
+                title:  Text('Movies List'),
+                subtitle:  Text('Database of movies'),
                 leading: Icon(Icons.movie),//lado izquierdo,
                 trailing: Icon(Icons.chevron_right), //lado derecho
               )
