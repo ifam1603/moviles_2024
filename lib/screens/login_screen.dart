@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moviles_2024/onboarding/introduction_screen.dart';
+import 'package:moviles_2024/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  
+  final bool hasSeenOnboarding;
+
+  const LoginScreen({required this.hasSeenOnboarding, super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -15,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     // Obtenemos las dimensiones de la pantalla
     final screenSize = MediaQuery.of(context).size;
 
@@ -66,20 +70,33 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 77, 115, 252),
         ),
-        onPressed: () {
+        onPressed: () async {
           setState(() {
             isloading = true; // Cambia el estado a cargando
           });
-          Future.delayed(const Duration(milliseconds: 2000)).then((value) {
-            setState(() {
-              isloading = false; // Restablece el estado
-            });
-            // Navega a la pantalla de introducción después del inicio de sesión exitoso
+          await Future.delayed(const Duration(milliseconds: 2000));
+
+          setState(() {
+            isloading = false; // Restablece el estado
+          });
+
+          if (!widget.hasSeenOnboarding) {
+            // marca el onboarding como visto
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setBool('hasSeenOnboarding', true);
+
+            // navega al introductionscreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => IntroductionScreen()),
             );
-          });
+          } else {
+            // navega directamnete al home si el onboarding ya fue visto
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          }
         },
         child: const Text('Validar usuario'),
       ),
