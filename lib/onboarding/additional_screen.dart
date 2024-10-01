@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:moviles_2024/screens/home_screen.dart';
-import 'package:moviles_2024/screens/profile_screen.dart';
 
 class AdditionalScreen extends StatelessWidget {
   @override
@@ -11,12 +11,12 @@ class AdditionalScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Lottie.asset('assets/lottie_animation3.json', height: 200), // Add your Lottie animation file here
+            SizedBox(height: 20),
             Text("Perfil de Usuario", style: TextStyle(fontSize: 24)),
             SizedBox(height: 20),
-            // Aquí puedes agregar más detalles del perfil del usuario
             ElevatedButton(
               onPressed: () {
-                // Navegar a la pantalla de perfil
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => HomeScreen()),
