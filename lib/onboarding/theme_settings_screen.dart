@@ -48,37 +48,9 @@ ListTile(
                 },
               ),
               ListTile(
-                title: Text("Roboto"),
-                onTap: () {
-                  updateFont("Roboto");
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
                 title: Text("Lobster"),
                 onTap: () {
                   updateFont("Lobster"); // Cambia a la fuente Lobster
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text("Open Sans"),
-                onTap: () {
-                  updateFont("OpenSans"); // Cambia a la fuente Open Sans
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text("Poppins"),
-                onTap: () {
-                  updateFont("Poppins"); // Cambia a la fuente Poppins
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text("Montserrat"),
-                onTap: () {
-                  updateFont("Montserrat"); // Cambia a la fuente Montserrat
                   Navigator.pop(context);
                 },
               ),

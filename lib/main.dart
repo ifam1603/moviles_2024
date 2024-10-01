@@ -2,9 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:moviles_2024/screens/home_screen.dart';
 import 'package:moviles_2024/screens/login_screen.dart';
 import 'package:moviles_2024/screens/movies_screen.dart';
+import 'package:moviles_2024/screens/settings_screen.dart';
 import 'package:moviles_2024/settings/global_values.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Importa Shared Preferences
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Asegúrate de que la inicialización de Flutter esté lista
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  
+  // Cargar preferencias al iniciar
+  bool isDarkTheme = prefs.getBool('isDarkTheme') ?? false; // Por defecto, falso
+  String selectedFont = prefs.getString('selectedFont') ?? "Default"; // Por defecto, "Default"
+
+  // Actualiza los ValueNotifiers con las preferencias cargadas
+  GlobalValues.banthemeDark.value = isDarkTheme;
+  GlobalValues.selectedFont.value = selectedFont;
+
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,8 +40,9 @@ class MyApp extends StatelessWidget {
               routes: {
                 "/home": (context) => HomeScreen(),
                 "/db": (context) => MoviesScreen(),
+                "/settings": (context) => SettingsScreen(),
               },
-              // Apply the selected font globally
+              // Aplicar la fuente seleccionada globalmente
               builder: (context, child) {
                 return DefaultTextStyle(
                   style: TextStyle(fontFamily: selectedFont),

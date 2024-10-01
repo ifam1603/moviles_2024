@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:moviles_2024/screens/movies_screen.dart';
 import 'package:moviles_2024/screens/profile_screen.dart';
+import 'package:moviles_2024/screens/settings_screen.dart';
 import 'package:moviles_2024/settings/color_settings.dart';
 import 'package:moviles_2024/settings/global_values.dart';
 
@@ -49,9 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
           TabItem(icon: Icons.person, title: 'Profile'),
           TabItem(icon: Icons.exit_to_app, title: 'Exit'),
         ],
-        onTap: (int i) => setState(() {
-          index = i;
-        }),
+        onTap: (int i) {
+          setState(() {
+            index = i; // Actualizar el índice
+          });
+        },
       ),
 
       floatingActionButtonLocation:  ExpandableFab.location,
@@ -94,8 +97,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 subtitle:  Text('Database of movies'),
                 leading: Icon(Icons.movie),//lado izquierdo,
                 trailing: Icon(Icons.chevron_right), //lado derecho
+              ),
+                ListTile(
+                onTap: () => Navigator.pushNamed(context,'/settings'),
+                title:  Text('Theme settings'),
+                subtitle:  Text('personalizar'),
+                leading: Icon(Icons.palette),//lado izquierdo,
+                trailing: Icon(Icons.chevron_right), //lado derecho
               )
           ],
+          
         ),
       );
     }
