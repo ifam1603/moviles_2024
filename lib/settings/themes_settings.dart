@@ -15,4 +15,5 @@ class ThemesSettings {
       final theme = ThemeData.dark();
       return theme.copyWith();
   }
+  
 }

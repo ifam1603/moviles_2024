@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviles_2024/onboarding/introduction_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,20 +9,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final conUser = TextEditingController();
   final conPwd = TextEditingController();
-
   bool isloading = false;
 
   @override
   Widget build(BuildContext context) {
-
     TextFormField txtUser = TextFormField(
       keyboardType: TextInputType.emailAddress,
       controller: conUser,
       decoration: const InputDecoration(
-        prefixIcon: Icon(Icons.person)
+        prefixIcon: Icon(Icons.person),
       ),
     );
 
@@ -30,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       obscureText: true,
       controller: conPwd,
       decoration: const InputDecoration(
-        prefixIcon:Icon(Icons.password) 
+        prefixIcon: Icon(Icons.password),
       ),
     );
 
@@ -51,24 +49,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final btn_Login = Positioned(
       bottom: 200,
-      width: MediaQuery.of(context).size.width *.8,
+      width: MediaQuery.of(context).size.width * .8,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 77, 115, 252)
+          backgroundColor: const Color.fromARGB(255, 77, 115, 252),
         ),
-        onPressed: (){
+        onPressed: () {
           isloading = true;
           setState(() {});
-          Future.delayed(
-            const Duration(milliseconds: 4000)
-          ).then((value) =>{
-            isloading=false,
-            setState(() {}),
-            Navigator.pushNamed(context, "/home")
+          Future.delayed(const Duration(milliseconds: 2000)).then((value) {
+            isloading = false;
+            setState(() {});
+            // Navega a la pantalla de introducción después del inicio de sesión exitoso
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => IntroductionScreen()),
+            );
           });
-        }, 
-        child: const Text('validar usuario')
-        ),
+        },
+        child: const Text('Validar usuario'),
+      ),
     );
 
     final gifLoading = Positioned(
@@ -76,21 +76,24 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Image.asset('assets/loading.gif',height: 100,)
       );
 
-    return  Scaffold(
+
+    return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/sanic.jpg'))
+            image: AssetImage('assets/sanic.jpg'),
+          ),
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
             Positioned(
               top: 10,
-              child: Image.asset('assets/sanic_logot.png',width: 200,)),
+              child: Image.asset('assets/sanic_logot.png', width: 200),
+            ),
             ctnCredentials,
             btn_Login,
             isloading ? gifLoading:Container()
