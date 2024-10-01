@@ -9,8 +9,15 @@ class ThemeSettingsScreen extends StatefulWidget {
 }
 
 class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
-  void updateTheme(bool value) {
-    GlobalValues.banthemeDark.value = value;
+  // Lista de temas disponibles
+  final List<String> themes = ["Light", "Dark", "Gold"];
+  String selectedTheme = GlobalValues.selectedTheme.value; // Tema seleccionado inicial
+
+  void updateTheme(String theme) {
+    setState(() {
+      selectedTheme = theme; // Actualizar tema seleccionado
+      GlobalValues.selectedTheme.value = selectedTheme; // Actualizar ValueNotifier
+    });
   }
 
   void updateFont(String font) {
@@ -24,12 +31,28 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('assets/lottie_animation2.json', height: 200), 
-          SwitchListTile(
-            title: Text("Activar Tema Oscuro"),
-            value: GlobalValues.banthemeDark.value,
-            onChanged: updateTheme,
+          Lottie.asset('assets/lottie_animation2.json', height: 200),
+          
+          // Dropdown para seleccionar el tema
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: DropdownButton<String>(
+              value: selectedTheme,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  updateTheme(newValue); // Actualizar tema
+                }
+              },
+              items: themes.map<DropdownMenuItem<String>>((String theme) {
+                return DropdownMenuItem<String>(
+                  value: theme,
+                  child: Text(theme),
+                );
+              }).toList(),
+            ),
           ),
+          
+          // ListTile para seleccionar la fuente
           ListTile(
             title: Text("Seleccionar Fuente"),
             subtitle: Text(GlobalValues.selectedFont.value),
@@ -53,6 +76,20 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
                           title: Text("Lobster"),
                           onTap: () {
                             updateFont("Lobster");
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: Text("Roboto"),
+                          onTap: () {
+                            updateFont("Roboto");
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: Text("Arial"),
+                          onTap: () {
+                            updateFont("Arial");
                             Navigator.pop(context);
                           },
                         ),
