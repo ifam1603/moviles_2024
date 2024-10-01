@@ -24,7 +24,7 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('assets/lottie_animation2.json', height: 200), // Add your Lottie animation file here
+          Lottie.asset('assets/lottie_animation2.json', height: 200), 
           SwitchListTile(
             title: Text("Activar Tema Oscuro"),
             value: GlobalValues.banthemeDark.value,

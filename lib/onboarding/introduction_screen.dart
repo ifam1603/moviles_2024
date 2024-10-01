@@ -11,7 +11,7 @@ class IntroductionScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset('assets/lottie_animation1.json', height: 200), // Add your Lottie animation file here
+            Lottie.asset('assets/lottie_animation1.json', height: 200), 
             SizedBox(height: 20),
             Text("Bienvenido a nuestra App!", style: TextStyle(fontSize: 24)),
             SizedBox(height: 20),

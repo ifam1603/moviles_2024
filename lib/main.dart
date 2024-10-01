@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
               home: LoginScreen(),
               theme: isDarkTheme ? ThemeData.dark() : ThemeData.light(),
               routes: {
+                "/login": (context)=> LoginScreen(),
                 "/home": (context) => HomeScreen(),
                 "/db": (context) => MoviesScreen(),
                 "/settings": (context) => SettingsScreen(),

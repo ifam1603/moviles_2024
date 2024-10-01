@@ -38,6 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
         switch (index) {
           case 1:
             return ProfileScreen();
+          case 2:
+          // Lógica para cerrar sesión
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _logout();
+            });
+            return Container();
           default:
             return ProfileScreen();
         }
@@ -78,6 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ]),
 
     );
+  }
+
+    void _logout() {
+    // Lógica para cerrar sesión, por ejemplo, navegar a la pantalla de inicio de sesión
+    Navigator.of(context).pushReplacementNamed('/login');
   }
 
   Widget myDrawer(){
