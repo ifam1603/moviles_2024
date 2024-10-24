@@ -1,11 +1,13 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:moviles_2024/provider/test_provider.dart';
 import 'package:moviles_2024/screens/movies_screen.dart';
 import 'package:moviles_2024/screens/profile_screen.dart';
 import 'package:moviles_2024/screens/settings_screen.dart';
 import 'package:moviles_2024/settings/color_settings.dart';
 import 'package:moviles_2024/settings/global_values.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+   final testprovider = Provider.of<TestProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorSettings.navColor,
@@ -49,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }),
       //endDrawer: Drawer(),
-      drawer: myDrawer(),
+      drawer: myDrawer(testprovider),
       bottomNavigationBar: ConvexAppBar(
         items: [
           TabItem(icon: Icons.home, title: 'Home'),
@@ -91,15 +96,15 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).pushReplacementNamed('/login');
   }
 
-  Widget myDrawer(){
+  Widget myDrawer(TestProvider testprovider){
       return Drawer(
         child: ListView(
           children: [
-            const UserAccountsDrawerHeader(
+             UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzoEHXyPFTvvqwFKKMX9XqrHlbPu4m1PG3KQ&s'),
               ),
-              accountName: Text('Antoine Griezzman'), 
+              accountName: Text(testprovider.name), 
               accountEmail: Text('antuan@hotmail.com')
               ),
               ListTile(
@@ -115,7 +120,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 subtitle:  Text('personalizar'),
                 leading: Icon(Icons.palette),//lado izquierdo,
                 trailing: Icon(Icons.chevron_right), //lado derecho
-              )
+              ),
+                ListTile(
+                onTap: () => Navigator.pushNamed(context,'/popularMovies'),
+                title:  Text('pellculas populares'),
+                leading: Icon(Icons.movie_creation),//lado izquierdo,
+                trailing: Icon(Icons.chevron_right), //lado derecho
+              ),
           ],
           
         ),

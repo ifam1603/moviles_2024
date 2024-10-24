@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviles_2024/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:moviles_2024/onboarding/introduction_screen.dart';
 import 'package:moviles_2024/screens/home_screen.dart';
@@ -58,6 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
           txtUser,
           SizedBox(height: 16), // Espaciado entre campos
           txtPwd,
+
         ],
       ),
     );
@@ -102,6 +104,18 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
+//////////BTOON DE REGROSTRO
+    final btn_register = Positioned(
+      bottom: 150, // Espaciado desde el fondo
+      width: screenSize.width * 0.8,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 77, 115, 252),
+        ),
+        onPressed: () async {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
+        }, 
+        child: const Text('Registro')));
     // GIF de carga
     final gifLoading = Positioned(
       top: 50,
@@ -131,6 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ctnCredentials, // Contenedor con los campos de texto
             btn_Login, // Botón de inicio de sesión
+            btn_register,
             if (isloading) gifLoading, // Mostrar GIF de carga si es necesario
           ],
         ),

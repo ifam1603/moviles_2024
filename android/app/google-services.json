@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "360052265500",
+    "project_id": "moviles-1603",
+    "storage_bucket": "moviles-1603.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360052265500:android:8483df03bed3b8e2c605d9",
+        "android_client_info": {
+          "package_name": "com.example.moviles_2024"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7chE_lt2DOlbty4f_eDyTm5qv48cW_tk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
