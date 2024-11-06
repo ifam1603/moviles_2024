@@ -32,7 +32,7 @@ class PopularMoviesDao {
     return PopularMoviesDao(
       backdropPath: popular['backdrop_path'],
       id: popular['id'],
-      originalLanguage: popular['original_languaje'],
+      originalLanguage: popular['original_language'],
       originalTitle: popular['original_title'],
       overview: popular['overview'],
       popularity: popular['popularity'],
@@ -40,7 +40,8 @@ class PopularMoviesDao {
       releaseDate: popular['release_date'],
       title: popular['title'],
       voteAverage: popular['vote_average'],
-      voteCount: popular['vote_count'],);
+      voteCount: popular['vote_count'],
+      );
   }
 
 }

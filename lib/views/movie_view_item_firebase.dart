@@ -7,19 +7,21 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-class MovieViewItem extends StatefulWidget {
-  MovieViewItem(
+class MovieViewItemFirebase extends StatefulWidget {
+  MovieViewItemFirebase(
       {super.key,
       required this.moviesDAO,
+      required this.uid,
       });
 
-  MoviesDAO moviesDAO;
+  final MoviesDAO moviesDAO;
+  final uid;
   
   @override
-  State<MovieViewItem> createState() => _MovieViewItemState();
+  State<MovieViewItemFirebase> createState() => _MovieViewItemFirebaseState();
 }
 
-class _MovieViewItemState extends State<MovieViewItem> {
+class _MovieViewItemFirebaseState extends State<MovieViewItemFirebase> {
   MoviesDatabase? moviesDatabase;
 
   @override
@@ -41,7 +43,8 @@ class _MovieViewItemState extends State<MovieViewItem> {
           Row(
             children: [
               Image.network(
-                'https://i.etsystatic.com/18242346/r/il/933afb/6210006997/il_570xN.6210006997_9fqx.jpg',
+                widget.moviesDAO.imgMovie!,
+                width:100,
                 height: 100,
               ),
               Expanded(
@@ -65,11 +68,11 @@ class _MovieViewItemState extends State<MovieViewItem> {
               IconButton(
                   onPressed: () {
                     moviesDatabase!
-                        .DELETE('tblmovies',widget.moviesDAO.idMovie!)
+                        .DELETE('tblmovies', widget.moviesDAO.idMovie!)
                         .then((value) {
                       if (value > 0) {
-                        //GlobalValues.bandUpdListMovies.value =
-                          //  !GlobalValues.bandUpdListMovies.value;
+                        GlobalValues.bandUpdListMovies.value =
+                            !GlobalValues.bandUpdListMovies.value;
                         return QuickAlert.show(
                           context: context,
                           type: QuickAlertType.success,
