@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
               accountEmail: Text('antuan@hotmail.com')
               ),
               ListTile(
-                onTap: () => Navigator.pushNamed(context,'/db'),
+                onTap: () => Navigator.pushNamed(context,'/firebaseMovie'),
                 title:  Text('Movies List'),
                 subtitle:  Text('Database of movies'),
                 leading: Icon(Icons.movie),//lado izquierdo,

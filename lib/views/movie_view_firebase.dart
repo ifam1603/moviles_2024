@@ -8,9 +8,10 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class MovieViewFirebase extends StatefulWidget {
-  MovieViewFirebase({super.key, this.moviesDAO});
+  MovieViewFirebase({Key? key, this.moviesDAO,this.uid}): super(key: key);
 
   MoviesDAO? moviesDAO;
+  final String? uid;
 
   @override
   State<MovieViewFirebase> createState() => _MovieViewState();
@@ -38,6 +39,7 @@ class _MovieViewState extends State<MovieViewFirebase> {
 
   @override
   Widget build(BuildContext context) {
+    
     final txtNameMovie = TextFormField(
       controller: conName,
       decoration: const InputDecoration(
@@ -107,20 +109,19 @@ class _MovieViewState extends State<MovieViewFirebase> {
                   showConfirmBtn: false);
             }
           });
-        } /*else {
-          moviesDatabase!.UPDATE(
+        } else {
+          moviesDatabase!.update(
             {
-              "idMovie": widget.moviesDAO!.idMovie,
               'nameMovie': conName.text,
               'overview': conOverview.text,
               'imgMovie': conImgMovie.text,
               'releaseDate': conRelease.text
-            },
+            }, '${widget.uid}'
           ).then((value) {
             final String msj;
             QuickAlertType type = QuickAlertType.success;
             if (value) {
-              GlobalValues.banUpdListMovies.value = !GlobalValues.banUpdListMovies.value;
+              GlobalValues.bandUpdListMovies.value = !GlobalValues.bandUpdListMovies.value;
               type = QuickAlertType.success;
               msj = 'Transaction completed Successfully!';
             } else {
@@ -135,7 +136,7 @@ class _MovieViewState extends State<MovieViewFirebase> {
               showConfirmBtn: false,
             );
           });
-        }*/
+        }
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.blue[200],

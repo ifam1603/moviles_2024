@@ -63,7 +63,6 @@ class _MoviesScreenFirebaseState extends State<MoviesScreenFirebase> {
                 return MovieViewItemFirebase(
                   moviesDAO: MoviesDAO.fromMap(
                     {
-                      'idMovie': movieData.id,
                       'imgMovie': movieData.get('imgMovie'),
                       'nameMovie': movieData.get('nameMovie'),
                       'overview': movieData.get('overview'),

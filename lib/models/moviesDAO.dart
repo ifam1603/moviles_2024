@@ -4,7 +4,7 @@ class MoviesDAO {
    int? idMovie;
   String? nameMovie;
   String? overview;
-  //String? idGenre;
+ // String? idGenre;
   String? imgMovie;
   String? releaseDate; 
 

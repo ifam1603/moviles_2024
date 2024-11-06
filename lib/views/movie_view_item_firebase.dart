@@ -3,6 +3,7 @@ import 'package:moviles_2024/database/movies_database.dart';
 import 'package:moviles_2024/models/moviesDAO.dart';
 import 'package:moviles_2024/settings/global_values.dart';
 import 'package:moviles_2024/views/movie_view.dart';
+import 'package:moviles_2024/views/movie_view_firebase.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -46,6 +47,7 @@ class _MovieViewItemFirebaseState extends State<MovieViewItemFirebase> {
                 widget.moviesDAO.imgMovie!,
                 width:100,
                 height: 100,
+                fit: BoxFit.cover,
               ),
               Expanded(
                 child: ListTile(
@@ -59,12 +61,14 @@ class _MovieViewItemFirebaseState extends State<MovieViewItemFirebase> {
                       context: context, 
                       pageListBuilder: (context) => [
                         WoltModalSheetPage(
-                          child: MovieView(moviesDAO: widget.moviesDAO,)
+                          child: MovieViewFirebase(moviesDAO: widget.moviesDAO, uid: widget.uid
+                          ,)
                         )
                       ]
                     );
                   },
-                  icon: Icon(Icons.edit)),
+                    icon: Icon(Icons.edit)
+                  ),
               IconButton(
                   onPressed: () {
                     moviesDatabase!

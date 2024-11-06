@@ -16,6 +16,7 @@ collectionReference= firebaseFirestore.collection('movies');
 Future<bool> insertar (Map<String, dynamic> movies) async{
   try {
     collectionReference!.doc().set(movies);
+    return true;
   } catch (e) {
     kDebugMode ? print('ERROR AL INSERTAR: ${e.toString()}'): '';
     return false;
@@ -27,14 +28,21 @@ Future<bool> delete (String UId)async{
 
   try {
     collectionReference!.doc(UId).delete();
+    return true;
   } catch (e) {
-    print('error $e');
+      print('error $e');
   }
   return false;
 }
 
-Future<void> update (Map<String, dynamic> movies, String id) async{
- return collectionReference!.doc(id).update(movies);
+Future<bool> update (Map<String, dynamic> movies, String id) async{
+  try {
+    collectionReference!.doc(id).update(movies);
+    return true;
+  } catch (e) {
+      print('error $e');
+  }
+ return false;
 }
 //para retornar todos los resultados(documentos de esa coleccion) que tenemos en firebase
 Stream<QuerySnapshot> Select (){

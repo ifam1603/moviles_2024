@@ -4,6 +4,7 @@ import 'package:moviles_2024/firebase_options.dart';
 import 'package:moviles_2024/provider/test_provider.dart';
 import 'package:moviles_2024/screens/detail_popular_screen.dart';
 import 'package:moviles_2024/screens/home_screen.dart';
+import 'package:moviles_2024/screens/movies_screen_firebase.dart';
 import 'package:moviles_2024/screens/register_screen.dart';
 import 'package:moviles_2024/screens/login_screen.dart';
 import 'package:moviles_2024/screens/movies_screen.dart';
@@ -65,6 +66,7 @@ class MyApp extends StatelessWidget {
                   "/login": (context) => LoginScreen(hasSeenOnboarding: hasSeenOnboarding),
                   "/home": (context) => HomeScreen(),
                   "/db": (context) => MoviesScreen(),
+                  "/firebaseMovie":(context) => MoviesScreenFirebase(),
                   "/settings": (context) => SettingsScreen(),
                   "/popularMovies":(context)=> PopularScreen(),
                   "/detail": (context) => DetailPopularScreen(),
