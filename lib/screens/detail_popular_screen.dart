@@ -60,10 +60,10 @@ Future<void> _checkIfFavorite(int movieId) async {
   }
 }
 
-Future<void> _toggleFavorite() async {
+Future<void> _alternarFavorito() async {
   if (popular != null) {
     // Llama a la función de la API para agregar o quitar de favoritos
-    await _api.toggleFavorite(popular!.id, !isFavorite);
+    await _api.alternarestadofav(popular!.id, !isFavorite);
     setState(() {
       isFavorite = !isFavorite; // Cambia el estado de favorito
     });
@@ -127,7 +127,7 @@ Future<void> _toggleFavorite() async {
             IconButton(
               icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
               color: Colors.red,
-              onPressed: _toggleFavorite, // Llama a la función para alternar favoritos
+              onPressed: _alternarFavorito, // Llama a la función para alternar favoritos
             ),
           ],
       ),
@@ -145,167 +145,208 @@ Future<void> _toggleFavorite() async {
                 ),
               ),
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        popular?.title ?? '',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Fecha de lanzamiento: ${popular?.releaseDate ?? 'N/A'}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Popularidad: ${popular?.popularity ?? 'N/A'}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Text(
-                            'Promedio de votos:',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white70,
+                child: Container(
+                  //color: Colors.black.withOpacity(0.7),
+                        padding: const EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          color: Colors.black.withOpacity(0.7),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            popular?.title ?? '',
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          // Widget de estrellas para el rating
-                          RatingBarIndicator(
-                            rating: (popular?.voteAverage ?? 0) / 2, // Convertimos a escala de 5
-                            itemBuilder: (context, index) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          color: Colors.black.withOpacity(0.7),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: Colors.black.withOpacity(0.7),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Fecha de lanzamiento: ${popular?.releaseDate ?? 'N/A'}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
+                              ),
                             ),
-                            itemCount: 5,
-                            itemSize: 20.0,
-                            direction: Axis.horizontal,
                           ),
-                          const SizedBox(width: 8),
-                          Text(
-                            '${popular?.voteAverage ?? 'N/A'}/10',
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          color: Colors.black.withOpacity(0.7),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Popularidad: ${popular?.popularity ?? 'N/A'}',
                             style: const TextStyle(
                               fontSize: 16,
                               color: Colors.white70,
                             ),
                           ),
-                        ],
-                      ),
-/////////////////////////////////////////RESUMEN DE PELICULA 
-                      const SizedBox(height: 10),
-                      Text(
-                        'Resumen:',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        popular?.overview ?? 'No disponible',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white70,
-                        ),
-                      ),
-//////////////////////REPRODUCTOR DEL TRAILER 
-                      const SizedBox(height: 20),
-                      if (trailerUrl != null && _youtubeController != null)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Tráiler:',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                        const SizedBox(height: 10),
+                        Container(
+                          color: Colors.black.withOpacity(0.7),
+                          child: Row(
+                            children: [
+                              const Text(
+                                'Promedio de votos:',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white70,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            YoutubePlayer(
-                              controller: _youtubeController!,
-                              showVideoProgressIndicator: true,
-                              progressIndicatorColor: Colors.red,
-                            ),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
-/////////////////////////////////LISTA DE ACTORES 
-                     const SizedBox(height: 10),
-                      const Text(
-                        'Actores:',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        height: 150,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: cast.length,
-                          itemBuilder: (context, index) {
-                            final actor = cast[index];
-                            return Container(
-                              width: 100,
-                              margin: const EdgeInsets.only(right: 10),
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 40,
-                                    backgroundImage: actor.profilePath != null
-                                        ? NetworkImage(
-                                            'https://image.tmdb.org/t/p/w500${actor.profilePath}',
-                                          )
-                                        : const AssetImage('assets/images/placeholder.png') as ImageProvider,
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    actor.name,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    actor.character,
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white70,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
+                              const SizedBox(width: 8),
+                              // Widget de estrellas para el rating
+                              RatingBarIndicator(
+                                rating: (popular?.voteAverage ?? 0) / 2, // Convertimos a escala de 5
+                                itemBuilder: (context, index) => const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                itemCount: 5,
+                                itemSize: 20.0,
+                                direction: Axis.horizontal,
                               ),
-                            );
-                          },
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  '${popular?.voteAverage ?? 'N/A'}/10',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                  /////////////////////////////////////////RESUMEN DE PELICULA 
+                        const SizedBox(height: 10),
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Resumen:',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Container(
+                          color: Colors.black.withOpacity(0.7),
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            popular?.overview ?? 'No disponible',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ),
+                  //////////////////////REPRODUCTOR DEL TRAILER 
+                        const SizedBox(height: 20),
+                        if (trailerUrl != null && _youtubeController != null)
+                          Container(
+                            color: Colors.black.withOpacity(0.7),
+                        padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Tráiler:',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                YoutubePlayer(
+                                  controller: _youtubeController!,
+                                  showVideoProgressIndicator: true,
+                                  progressIndicatorColor: Colors.red,
+                                ),
+                                const SizedBox(height: 20),
+                              ],
+                            ),
+                          ),
+                  /////////////////////////////////LISTA DE ACTORES 
+                       const SizedBox(height: 10),
+                        const Text(
+                          'Actores:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          color: Colors.black.withOpacity(0.7),
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: cast.length,
+                              itemBuilder: (context, index) {
+                                final actor = cast[index];
+                                return Container(
+                                  width: 100,
+                                  margin: const EdgeInsets.only(right: 10),
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 40,
+                                        backgroundImage: actor.profilePath != null
+                                            ? NetworkImage(
+                                                'https://image.tmdb.org/t/p/w500${actor.profilePath}',
+                                              )
+                                            : const AssetImage('assets/images/placeholder.png') as ImageProvider,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        actor.name,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        actor.character,
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.white70,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],//childres
+                    ),
                   ),
                 ),
               ),

@@ -50,7 +50,7 @@ class PopularApi {
     return castData.map((actor) => Actor.fromMap(actor)).toList();
   }
 
-Future<void> toggleFavorite(int movieId, bool isFavorite) async {
+Future<void> alternarestadofav(int movieId, bool isFavorite) async {
   final url = 'https://api.themoviedb.org/3/account/$accountId/favorite?api_key=$apiKey&session_id=$sessionId';
   
   try {
