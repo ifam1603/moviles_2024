@@ -11,12 +11,19 @@ class FavoriteMoviesScreen extends StatefulWidget {
 }
 
 class _FavoriteMoviesScreenState extends State<FavoriteMoviesScreen> {
+  
   late Future<List<PopularMoviesDao>> _favoriteMovies;
 
   @override
   void initState() {
     super.initState();
-    _favoriteMovies = PopularApi().getFavoriteMovies(); // Llamamos la función para obtener los favoritos
+    _loadFavoriteMovies();
+  }
+
+  void _loadFavoriteMovies() {
+    setState(() {
+      _favoriteMovies = PopularApi().getFavoriteMovies();
+    });
   }
 
   @override
@@ -49,7 +56,7 @@ class _FavoriteMoviesScreenState extends State<FavoriteMoviesScreen> {
                 title: Text(movie.title ?? 'Título desconocido'),
                 subtitle: Text(movie.releaseDate ?? 'Fecha desconocida'),
                 leading: Hero(
-                  tag: 'movie-poster-${movie.id}', // Usamos el ID de la película como el tag
+                  tag: 'movie-poster-${movie.id}',
                   child: movie.posterPath != null
                       ? Image.network(
                           'https://image.tmdb.org/t/p/w500${movie.posterPath}',
@@ -60,14 +67,15 @@ class _FavoriteMoviesScreenState extends State<FavoriteMoviesScreen> {
                       : const Icon(Icons.movie),
                 ),
                 onTap: () {
-                  // Aquí navegamos a la pantalla de detalles de la película
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => DetailPopularScreen(),
                       settings: RouteSettings(arguments: movie),
                     ),
-                  );
+                  ).then((_) {
+                    _loadFavoriteMovies(); // Recargar cuando se regresa de la pantalla de detalle
+                  });
                 },
               );
             },
