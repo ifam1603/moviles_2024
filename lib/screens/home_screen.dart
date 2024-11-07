@@ -127,6 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: Icon(Icons.movie_creation),//lado izquierdo,
                 trailing: Icon(Icons.chevron_right), //lado derecho
               ),
+                ListTile(
+                onTap: () => Navigator.pushNamed(context,'/favoriteMovies'),
+                title:  Text('pellculas favoritas'),
+                leading: Icon(Icons.favorite),//lado izquierdo,
+                trailing: Icon(Icons.chevron_right), //lado derecho
+              ),
           ],
           
         ),

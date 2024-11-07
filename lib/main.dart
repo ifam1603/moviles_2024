@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:moviles_2024/firebase_options.dart';
 import 'package:moviles_2024/provider/test_provider.dart';
 import 'package:moviles_2024/screens/detail_popular_screen.dart';
+import 'package:moviles_2024/screens/favorite_Movies.dart';
 import 'package:moviles_2024/screens/home_screen.dart';
 import 'package:moviles_2024/screens/movies_screen_firebase.dart';
 import 'package:moviles_2024/screens/register_screen.dart';
@@ -70,7 +71,8 @@ class MyApp extends StatelessWidget {
                   "/settings": (context) => SettingsScreen(),
                   "/popularMovies":(context)=> PopularScreen(),
                   "/detail": (context) => DetailPopularScreen(),
-                  "/register":(context)=> RegisterScreen()
+                  "/register":(context)=> RegisterScreen(),
+                  "/favoriteMovies":(context)=> FavoriteMoviesScreen()
                 },
                 builder: (context, child) {
                   return DefaultTextStyle(

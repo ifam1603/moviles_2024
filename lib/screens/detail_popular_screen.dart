@@ -21,6 +21,10 @@ class _DetailPopularScreenState extends State<DetailPopularScreen> {
   String? trailerUrl;
   List<Actor> cast = [];
 
+   bool isFavorite = false; // Estado de favorito
+  final PopularApi _api = PopularApi(); // Instancia de la API
+
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +40,16 @@ class _DetailPopularScreenState extends State<DetailPopularScreen> {
          buscaractores(args.id);
       }
     });
+  }
+
+  Future<void> _toggleFavorite() async {
+    if (popular != null) {
+      // Llama a la función de la API para agregar o quitar de favoritos
+      await _api.toggleFavorite(popular!.id, !isFavorite);
+      setState(() {
+        isFavorite = !isFavorite; // Cambia el estado de favorito
+      });
+    }
   }
 
   Future<void> _buscartrailer(int movieId) async {
@@ -90,6 +104,13 @@ class _DetailPopularScreenState extends State<DetailPopularScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
+            color: Colors.red,
+            onPressed: _toggleFavorite, // Llama a la función para alternar favoritos
+          ),
+        ],
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
