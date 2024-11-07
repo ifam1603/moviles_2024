@@ -66,7 +66,7 @@ class _FavoriteMoviesScreenState extends State<FavoriteMoviesScreen> {
                         )
                       : const Icon(Icons.movie),
                 ),
-                onTap: () {
+                onTap: () {         
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -75,7 +75,7 @@ class _FavoriteMoviesScreenState extends State<FavoriteMoviesScreen> {
                     ),
                   ).then((_) {
                     _loadFavoriteMovies(); // Recargar cuando se regresa de la pantalla de detalle
-                  });
+                  });     
                 },
               );
             },

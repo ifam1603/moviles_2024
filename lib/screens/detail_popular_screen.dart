@@ -70,7 +70,6 @@ Future<void> _alternarFavorito() async {
   }
 }
 
-
   Future<void> _buscartrailer(int movieId) async {
     const apiKey = '28a9a255dd4987326d3217dcc1c3e647';
 
@@ -147,12 +146,15 @@ Future<void> _alternarFavorito() async {
               child: SingleChildScrollView(
                 child: Container(
                   //color: Colors.black.withOpacity(0.7),
-                        padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Hero(
+                        tag: 'movie-poster-${popular?.id}', 
+                        child: Image.network('https://image.tmdb.org/t/p/w500/${popular?.posterPath}',)),
                         Container(
                           color: Colors.black.withOpacity(0.7),
                           padding: const EdgeInsets.all(8.0),
@@ -345,7 +347,7 @@ Future<void> _alternarFavorito() async {
                             ),
                           ),
                         ),
-                      ],//childres
+                      ],//children
                     ),
                   ),
                 ),
