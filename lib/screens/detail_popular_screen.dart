@@ -25,32 +25,50 @@ class _DetailPopularScreenState extends State<DetailPopularScreen> {
   final PopularApi _api = PopularApi(); // Instancia de la API
 
 
-  @override
-  void initState() {
-    super.initState();
-    // Recibimos los argumentos de la película
-    Future.microtask(() {
-      final args = ModalRoute.of(context)?.settings.arguments as PopularMoviesDao?;
-      setState(() {
-        popular = args;
-        isLoading = false;
-      });
-      if (args != null) {
-        _buscartrailer(args.id);
-         buscaractores(args.id);
-      }
+@override
+void initState() {
+  super.initState();
+  // Recibimos los argumentos de la película
+  Future.microtask(() {
+    final args = ModalRoute.of(context)?.settings.arguments as PopularMoviesDao?;
+    setState(() {
+      popular = args;
+      isLoading = false;
+    });
+    if (args != null) {
+      _buscartrailer(args.id);
+      buscaractores(args.id);
+      // Verificar si la película está en los favoritos
+      _checkIfFavorite(args.id);
+    }
+  });
+}
+
+Future<void> _checkIfFavorite(int movieId) async {
+  try {
+    final favoriteMovies = await _api.getFavoriteMovies();
+    setState(() {
+      isFavorite = favoriteMovies.any((movie) => movie.id == movieId);
+    });
+  } catch (e) {
+    print('Error al verificar si la película está en favoritos: $e');
+    // Si hay error, asumimos que no está en favoritos
+    setState(() {
+      isFavorite = false;
     });
   }
+}
 
-  Future<void> _toggleFavorite() async {
-    if (popular != null) {
-      // Llama a la función de la API para agregar o quitar de favoritos
-      await _api.toggleFavorite(popular!.id, !isFavorite);
-      setState(() {
-        isFavorite = !isFavorite; // Cambia el estado de favorito
-      });
-    }
+Future<void> _toggleFavorite() async {
+  if (popular != null) {
+    // Llama a la función de la API para agregar o quitar de favoritos
+    await _api.toggleFavorite(popular!.id, !isFavorite);
+    setState(() {
+      isFavorite = !isFavorite; // Cambia el estado de favorito
+    });
   }
+}
+
 
   Future<void> _buscartrailer(int movieId) async {
     const apiKey = '28a9a255dd4987326d3217dcc1c3e647';
@@ -104,13 +122,13 @@ class _DetailPopularScreenState extends State<DetailPopularScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
-            color: Colors.red,
-            onPressed: _toggleFavorite, // Llama a la función para alternar favoritos
-          ),
-        ],
+          actions: [
+            IconButton(
+              icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
+              color: Colors.red,
+              onPressed: _toggleFavorite, // Llama a la función para alternar favoritos
+            ),
+          ],
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
