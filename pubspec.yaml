@@ -60,7 +60,7 @@ dependencies:
   #trailer pelicula
   youtube_player_flutter: ^8.0.0
   flutter_rating_bar: ^4.0.0
-  
+  animated_flutter_widgets: ^0.0.2
 
   
 

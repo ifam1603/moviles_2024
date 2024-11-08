@@ -67,21 +67,34 @@ class _FavoriteMoviesScreenState extends State<FavoriteMoviesScreen> {
                       : const Icon(Icons.movie),
                 ),
                 onTap: () {         
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailPopularScreen(),
-                      settings: RouteSettings(arguments: movie),
-                    ),
-                  ).then((_) {
-                    _loadFavoriteMovies(); // Recargar cuando se regresa de la pantalla de detalle
-                  });     
+                  Navigator.of(context).push(_createPopAndScaleRoute(movie)).then((_){
+                    _loadFavoriteMovies();
+                  });
                 },
               );
             },
           );
         },
       ),
+    );
+  }
+
+  Route _createPopAndScaleRoute(PopularMoviesDao movie) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => DetailPopularScreen(),
+      settings: RouteSettings(arguments: movie),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const curve = Curves.easeInOut;
+        final scaleAnimation = CurvedAnimation(
+          parent: animation,
+          curve: curve,
+        );
+
+        return ScaleTransition(
+          scale: scaleAnimation,
+          child: child,
+        );
+      },
     );
   }
 }
